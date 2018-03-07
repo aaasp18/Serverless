@@ -62,10 +62,27 @@ exports.dump = functions.firestore
         });
     }, err => {
         if (err) console.error(err.message);
-        // configs is now a map of JSON data
-        event.data.ref.set({
-          pushed: true
-        }, {merge: true});
+
+        var calculateOptions = { 
+          method: 'GET',
+          url: 'http://maps.goflo.in/calculate',
+          qs: { group: group }
+        };
+
+        request(calculateOptions, function (calculateError, calculateResponse, calculateBody) {
+          if (calculateError){
+            //throw new Error(calculateError);
+            console.error(calculateError);
+          }
+          console.log(calculateBody);
+          event.data.ref.set(
+            {
+              pushed: true,
+              calculateMessage: calculateBody
+            }, 
+            {merge: true}
+          );
+        });
     });
 
     return true; 
