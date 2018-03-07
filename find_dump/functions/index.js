@@ -21,7 +21,7 @@ exports.dump = functions.firestore
     // var name = newValue.name;
     var collection = [];
     var location = newValue['roomId'];
-    var group = newValue['buildingId'];
+    var group = newValue['locationId'];
     var username = newValue['email'];
 
     async.forEachOf(newValue['data'], (value, key, callback) => {
